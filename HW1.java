@@ -118,8 +118,8 @@ public class HW1 {
             Node current = head;
 
             // Traverse the list to find and remove nodes containing the specified value
-            while (current != null && current.next != null) { // Continue while current and next nodes are not
-                                                              // empty/null
+            // Continue while current and next nodes are not empty/null
+            while (current != null && current.next != null) {
                 if (current.next.data == value) { // Check if the next node contains the value
                     current.next = current.next.next; // Remove the next node by updating the current node's next
                                                       // pointer
