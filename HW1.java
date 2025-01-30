@@ -13,6 +13,8 @@
 
 import java.util.Stack;
 
+import org.w3c.dom.Node;
+
 public class HW1 {
 
     /*
@@ -86,11 +88,16 @@ public class HW1 {
          * found in the linked-list that is less than thr parameter value passed.
          */
         public void removeElementsLT(int ltValue) {
+            // Start from the head of the list and traverse through all the nodes
             Node current = head;
+
+            // Traverse the list while there are still nodes to process
             while (current != null) {
+                // If the current node's data is less than the given value, remove the element
                 if (current.data < ltValue) {
-                    removeElement(current.data);
+                    removeElement(current.data); // Call the removeElement method to remove the current node's value
                 }
+                // Move to the next node in the list
                 current = current.next;
             }
         }
@@ -101,16 +108,23 @@ public class HW1 {
          */
 
         public void removeElement(int value) {
+            // Handles the case where the head nodes contains the value to be removed
             while (head != null && head.data == value) {
-                head = head.next;
+                head = head.next; // Remove the current head node by updating the head pointer to the next node
             }
+
+            // Initialize a pointer for traversing the rest of the list starting from the
+            // head
             Node current = head;
 
-            while (current != null && current.next != null) {
-                if (current.next.data == value) {
-                    current.next = current.next.next;
+            // Traverse the list to find and remove nodes containing the specified value
+            while (current != null && current.next != null) { // Continue while current and next nodes are not
+                                                              // empty/null
+                if (current.next.data == value) { // Check if the next node contains the value
+                    current.next = current.next.next; // Remove the next node by updating the current node's next
+                                                      // pointer
                 } else {
-                    current = current.next;
+                    current = current.next;// If the next node does not contain the value, move to the next node
                 }
             }
         }
@@ -163,24 +177,31 @@ public class HW1 {
          * The method should utilize the provided Stack class.
          */
         public static boolean isPalindrome(String input) {
-            boolean result = true;
-            Stack<Character> stack = new Stack<>();
-            input = input.toLowerCase().replaceAll("\\s+", "");
+            boolean result = true; // Initialize the result to assume the input is in fact a palindrome
+            Stack<Character> stack = new Stack<>(); // Stack to store the first half of the string
+            input = input.toLowerCase().replaceAll("\\s+", ""); // Normalize input/gets rid of case sensitivity
 
-            // Your CODE GOES HERE
+            // Push the first half of the string onto the stack
             int length = input.length();
             for (int i = 0; i < length / 2; i++) {
-                stack.push(input.charAt(i));
+                stack.push(input.charAt(i)); // Store the characters in the stack
             }
+
+            // Find the middle character
             int middleIndex = length / 2;
+            // Adjust for odd length strings to skip the middle character
             if (length % 2 != 0) {
-                middleIndex++;
+                middleIndex++; // Skip the middle character for odd-length strings
             }
+
+            // Compare the second half of the string with the stack's contents
             for (int i = middleIndex; i < length; i++) {
+                // If the stack is empty or characters don't match, it's not a palindrome
                 if (stack.isEmpty() || stack.pop() != input.charAt(i)) {
-                    result = false;
+                    result = false; // Mark as non-palindrome if a mismatch occurs
                 }
             }
+            // Return the result of the palindrome check
             return result;
         }
 
@@ -200,24 +221,32 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
-            Stack<Integer> temp = new Stack<>();
-            int target = -1;
-            int currentIndex = stack.size();
+            Stack<Integer> temp = new Stack<>(); // Temporary stack to hold values during traversal
+            int target = -1; // Variable to track the largest index of the value k; Initilized to -1 in
+                             // case targeted value was not in the stack
+            int currentIndex = stack.size(); // Initilize the current index to top of the stack, given LIFO
 
+            // Traverse the stack to find the largest index of k
             while (!stack.isEmpty()) {
-                currentIndex--;
-                if (stack.peek() == k && currentIndex>target) {
-                    target = currentIndex;
+                currentIndex--; // Decrement currentIndex as about to pop from the stack
+                if (stack.peek() == k && currentIndex > target) { // if the current value matches k and has a larger
+                                                                  // index
+                    target = currentIndex; // Update targeted largest k index
                 }
-                temp.push(stack.pop());
+                temp.push(stack.pop()); // Pop the current element from stack and push to temp stack
             }
 
+            // Restore the elements back to the original stack
             while (!temp.isEmpty()) {
-                stack.push(temp.pop());
+                stack.push(temp.pop()); // Pop from temp and push back to stack
             }
 
-            System.out.println("Current Largest Index: " + target + "\n current index: " + currentIndex);
-            return target;
+            // Print the result of the largest index found
+            // (This is just for checking my error)
+            // System.out.println("Current Largest Index: " + target + "\n current index: "
+            // + currentIndex);
+
+            return target; // Return the largest index found
         }
 
     } // End class Stacks
